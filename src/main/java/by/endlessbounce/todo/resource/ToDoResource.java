@@ -1,8 +1,11 @@
 package by.endlessbounce.todo.resource;
 
+import by.endlessbounce.todo.model.ToDo;
 import by.endlessbounce.todo.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ToDoResource {
@@ -11,8 +14,8 @@ public class ToDoResource {
     private ToDoService service;
 
     @GetMapping(value = "/todos")
-    public String getAllToDos() {
-        return "index";
+    public List<ToDo> findAllToDos() {
+        return service.findAll();
     }
 
     @PutMapping(value = "/todos/{id}")

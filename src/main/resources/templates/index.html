@@ -11,12 +11,23 @@
     <script src="js/todo.controller.js"></script>
 </head>
 
-<body>
-
-<ul>
-    <li>Hello</li>
-    <li>Hello</li>
-</ul>
+<body ng-controller="ToDoCtrl as tdc">
+<table class="table">
+    <thead>
+        <th scope="col">No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Is Done</th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="todo in tdc.todos">
+            <th scope="row">{{todo.id + 1}}</th>
+            <td>{{todo.name}}</td>
+            <td>{{todo.description}}</td>
+            <td>{{todo.isDone}}</td>
+        </tr>
+    </tbody>
+</table>
 
 <script src="js/jquery-3.2.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>
