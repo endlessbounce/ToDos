@@ -22,7 +22,16 @@ public class ToDoService {
         return allTodo;
     }
 
-    public void save(ToDo todo){
+    public void addTodo(ToDo todo){
         repository.save(todo);
     }
+
+    public void updateTodo(ToDo todo){
+        repository.save(todo);
+    }
+
+    public void deleteTodo(long id){
+        repository.delete(id);
+    }
+
 }

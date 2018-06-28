@@ -12,22 +12,42 @@
 </head>
 
 <body ng-controller="ToDoCtrl as tdc">
-<table class="table">
-    <thead>
+<div class="container">
+    <h3>Add ToDo: </h3>
+
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" ng-model="tdc.name"/>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" ng-model="tdc.description"/>
+        </div>
+
+        <button class="btn btn-primary" ng-click="tdc.addTodo()">Add</button>
+        <small ng-show="tdc.valid">{{tdc.errorMsg}}</small>
+    </form>
+
+    <table class="table">
+        <thead>
         <th scope="col">No.</th>
         <th scope="col">Name</th>
         <th scope="col">Description</th>
         <th scope="col">Is Done</th>
-    </thead>
-    <tbody>
+        <th scope="col">Delete</th>
+        </thead>
+        <tbody>
         <tr ng-repeat="todo in tdc.todos">
             <th scope="row">{{todo.id + 1}}</th>
             <td>{{todo.name}}</td>
             <td>{{todo.description}}</td>
             <td>{{todo.isDone}}</td>
+            <td><button class="btn btn-danger" ng-click="tdc.deleteTodo()">Drop</button></td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <script src="js/jquery-3.2.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>

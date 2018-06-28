@@ -19,8 +19,8 @@ public class AppBootStrap implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        service.save(new ToDo(0L, "read", "read a lot", false));
-        service.save(new ToDo(1L, "write", "write a lot", false));
-        service.save(new ToDo(2L, "think", "think a lot", false));
+        service.addTodo(new ToDo(0L, "read", "read a lot", false));
+        service.addTodo(new ToDo(1L, "write", "write a lot", false));
+        service.addTodo(new ToDo(2L, "think", "think a lot", false));
     }
 }

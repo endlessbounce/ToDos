@@ -19,18 +19,18 @@ public class ToDoResource {
     }
 
     @PutMapping(value = "/todos/{id}")
-    public String putToDO(@PathVariable long id) {
-        return "index";
+    public void putToDO(@PathVariable long id, @RequestBody ToDo todo) {
+        service.updateTodo(todo);
     }
 
     @PostMapping(value = "/todos")
-    public String postToDO() {
-        return "index";
+    public void postToDO(@RequestBody ToDo todo) {
+        service.addTodo(todo);
     }
 
     @DeleteMapping(value = "/todos/{id}")
-    public String deleteToDO(@PathVariable long id) {
-        return "index";
+    public void deleteToDO(@PathVariable long id) {
+        service.deleteTodo(id);
     }
 
 }

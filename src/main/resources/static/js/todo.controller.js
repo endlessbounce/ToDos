@@ -10,7 +10,8 @@
                 'isDone': false
             };
             self.todos = [];
-            self.test = 1;
+            self.errorMsg = "Please fill in all the fields";
+            self.valid = false;
 
             //get form data on load of the page
             restService.findAllTodos().then(function (data) {
@@ -18,5 +19,12 @@
                 self.todos = data;
             });
 
+            self.addTodo = function () {
+
+            }
+
+            self.deleteTodo = function () {
+
+            }
         });
 })();
