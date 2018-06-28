@@ -18,19 +18,23 @@
     <form>
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" ng-model="tdc.todo.name" maxlength="20" placeholder="max 20 characters"/>
+            <input type="text" class="form-control" id="name" ng-model="tdc.todo.name" maxlength="20"
+                   placeholder="max 20 characters"/>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" class="form-control" id="description" ng-model="tdc.todo.description" maxlength="60" placeholder="max 60 characters"/>
+            <input type="text" class="form-control" id="description" ng-model="tdc.todo.description" maxlength="60"
+                   placeholder="max 60 characters"/>
             <small class="form-text text-muted" ng-show="tdc.valid">{{tdc.errorMsg}}</small>
         </div>
-
-        <button class="btn btn-primary" ng-click="tdc.addTodo()">Add</button>
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="tdc.addTodo()">Add</button>
+        </div>
     </form>
 
     <table class="table">
         <thead>
+        <th scope="col">Tick if done</th>
         <th scope="col">No.</th>
         <th scope="col">Name</th>
         <th scope="col">Description</th>
@@ -39,17 +43,33 @@
         <th scope="col"></th>
         </thead>
         <tbody>
-        <tr ng-repeat="todo in tdc.todos">
+        <tr ng-repeat="todo in tdc.todos track by $index">
+            <td ng-hide="todo.isDone">
+                <button class="btn btn-info" ng-click="tdc.setDone(todo)">Done</button>
+            </td>
+            <td ng-show="todo.isDone">
+                <button class="btn btn-info" ng-click="tdc.unDo(todo)">Undo</button>
+            </td>
             <th scope="row">{{todo.id + 1}}</th>
-            <td ng-hide="tdc.editMode">{{todo.name}}</td>
-            <td ng-show="tdc.editMode"><input ng-model="todo.name" maxlength="20" placeholder="max 20 characters" th:required="required" ></td>
-            <td ng-hide="tdc.editMode">{{todo.description}}</td>
-            <td ng-show="tdc.editMode"><input ng-model="todo.description" maxlength="60" placeholder="max 60 characters" th:required="required" ></td>
-            <td ng-show="todo.isDone">Done</td>
+            <td ng-hide="tdc.editMode[$index]">{{todo.name}}</td>
+            <td ng-show="tdc.editMode[$index]"><input ng-model="todo.name" maxlength="20" placeholder="1-20 characters"
+                                                      th:required="required"/></td>
+            <td ng-hide="tdc.editMode[$index]">{{todo.description}}</td>
+            <td ng-show="tdc.editMode[$index]"><input ng-model="todo.description" maxlength="60"
+                                                      placeholder="1-60 characters" th:required="required"/></td>
+            <td ng-show="todo.isDone" class="text-success">Done</td>
             <td ng-hide="todo.isDone">Pending</td>
-            <td><button class="btn btn-danger" ng-click="tdc.deleteTodo(todo.id)">Drop</button></td>
-            <td ng-hide="tdc.editMode"><button class="btn btn-warning" ng-click="tdc.changeEditMode()">Edit</button></td>
-            <td ng-show="tdc.editMode"><button class="btn btn-success" ng-click="tdc.updateTodo(todo)">Save</button></td>
+
+            <td>
+                <button ng-hide="todo.isDone" class="btn btn-danger" ng-click="tdc.deleteTodo(todo.id, $index)">Drop</button>
+            </td>
+            <td ng-hide="tdc.editMode[$index]">
+                <button ng-hide="todo.isDone" class="btn btn-warning" ng-click="tdc.changeEditMode($index)">Edit</button>
+            </td>
+            <td ng-show="tdc.editMode[$index]">
+                <button ng-hide="todo.isDone" class="btn btn-success" ng-click="tdc.updateTodo(todo, $index)">Save</button>
+            </td>
+
         </tr>
         </tbody>
     </table>
