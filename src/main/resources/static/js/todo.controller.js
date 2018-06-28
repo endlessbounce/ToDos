@@ -4,7 +4,7 @@
             var self = this;
 
             self.todo = {
-                'id': 0,
+                'id': null,
                 'name': "",
                 'description': "",
                 'isDone': false
@@ -12,6 +12,7 @@
             self.todos = [];
             self.errorMsg = "Please fill in all the fields";
             self.valid = false;
+            self.editMode = false;
 
             //get form data on load of the page
             restService.findAllTodos().then(function (data) {
@@ -20,11 +21,40 @@
             });
 
             self.addTodo = function () {
-
+                if (self.todo.name == "" || self.todo.description == "") {
+                    self.valid = true;
+                } else {
+                    restService.saveToDo(self.todo).then(function () {
+                        restService.findAllTodos().then(function (data) {
+                            self.todos = data;
+                            self.valid = false;
+                            self.todo.name = "";
+                            self.todo.description = "";
+                        });
+                    });
+                }
             }
 
-            self.deleteTodo = function () {
+            self.deleteTodo = function (id) {
+                restService.deleteToDo(id).then(function () {
+                    restService.findAllTodos().then(function (data) {
+                        self.todos = data;
+                    });
+                });
+            }
 
+            self.updateTodo = function (todo) {
+                restService.updateToDo(todo).then(function () {
+                    restService.findAllTodos().then(function (data) {
+                        self.todos = data;
+                        self.changeEditMode();
+                    });
+                });
+            }
+
+
+            self.changeEditMode = function () {
+                self.editMode = self.editMode ? false : true;
             }
         });
 })();
